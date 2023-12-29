@@ -1,6 +1,7 @@
 //restaurant_project\src\components\body\DishDetail.js
 
 import { Card, CardImg, CardBody, CardText, CardTitle } from "reactstrap";
+import LoadComments from "./LoadComments";
 
 const DishDetail = ({ dish }) => {
     return (
@@ -23,6 +24,10 @@ const DishDetail = ({ dish }) => {
                     <CardText>
                         {dish.price}/=
                     </CardText>
+
+                    <hr />
+                    <LoadComments comments={ dish.comments } />
+                    
                 </CardBody>
             </Card>
         </div>
