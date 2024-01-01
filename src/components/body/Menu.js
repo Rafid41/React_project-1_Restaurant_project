@@ -3,6 +3,7 @@ import MenuItem from "./MenuItem";
 import { Component } from "react";
 import DISHES from "../../data/dishes";
 import DishDetail from "./DishDetail";
+import COMMENTS from "../../data/comments";
 import { CardColumns, Modal, ModalBody, ModalFooter } from "reactstrap";
 
 // functional component
@@ -50,6 +51,7 @@ class Menu extends Component {
     // class component e useState() use kora jayna
     state = {
         dishes: DISHES,
+        comments: COMMENTS,
         selectedDish: null,
         modalOpen: false,
     };
@@ -80,9 +82,22 @@ class Menu extends Component {
             );
         });
 
-        const dishDetail = this.state.selectedDish ? (
-            <DishDetail dish={this.state.selectedDish} />
-        ) : null;
+        let dishDetail = null;
+        if (this.state.selectedDish != null) {
+            //comment er dishId r dish er id same hole oi comment return korbe
+            //dishID ==> comments.js er  field
+            //id ==> dishes.js er field
+            //filter return an array
+            const comments = this.state.comments.filter((comment) => {
+                return comment.dishId === this.state.selectedDish.id;
+            });
+            dishDetail = (
+                <DishDetail
+                    dish={this.state.selectedDish}
+                    comments={comments}
+                />
+            );
+        }
         return (
             <div className="container">
                 <div className="row">
@@ -92,7 +107,6 @@ class Menu extends Component {
                         onClick={this.toggleModal}
                     >
                         <ModalBody>{dishDetail}</ModalBody>
-                        
 
                         <ModalFooter>
                             <button color="primary" onClick={this.toggleModal}>
