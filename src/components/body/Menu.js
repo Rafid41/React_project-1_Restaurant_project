@@ -72,6 +72,8 @@ class Menu extends Component {
 
     //class component e render call korte hbe
     render() {
+        // modifying banner title in Navbar
+        document.title = "Menu";
         const menu = this.state.dishes.map((dish) => {
             return (
                 <MenuItem

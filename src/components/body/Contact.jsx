@@ -46,6 +46,8 @@ class Contact extends Component {
     };
 
     render() {
+        // modifying browser title in Navbar
+        document.title = "Contact";
         return (
             <div className="container">
                 <div
