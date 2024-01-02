@@ -2,30 +2,7 @@
 
 import React, { Component } from "react";
 import { Form, Button, Input } from "reactstrap";
-import { connect } from "react-redux";
 
-// dipatch r vinno vinno vabe lekha lagbena
-// all dispatch fn
-// protita property ek ek ta dispatch fn
-
-// mapDispatchToProps etake connect er moddhe likhte hbe export e
-const mapDispatchToProps = (dispatch) => {
-    return {
-        // addComment name e props hishabe send hbe
-        addComment: (dishId, rating, author, comment) =>
-            dispatch({
-                // dispatch return korbe
-                type: "ADD_COMMENT",
-                payload: {
-                    dishId: dishId,
-                    author: author,
-                    rating: rating,
-                    comment: comment,
-                },
-            }),
-        //ekhane aro dispatch fn lekha jabe
-    };
-};
 
 class CommentForm extends Component {
     constructor(props) {
@@ -109,8 +86,5 @@ class CommentForm extends Component {
     }
 }
 
-// connect 2 ta param receive kore
-// 1st: mapStateToProps     // state k props e covert/map kora
-// 2nd : mapDispatchToProps // dispatch k props
-// 1ta param dle auto "mapStateToProps" call hbe, tai 1st ta null
-export default connect(null, mapDispatchToProps)(CommentForm);
+
+export default CommentForm;

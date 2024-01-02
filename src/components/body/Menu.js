@@ -16,6 +16,29 @@ const mapStateToProps = (state) => {
     };
 };
 
+
+// from CommentForm.js
+const mapDispatchToProps = (dispatch) => {
+    return {
+        // addComment name e props hishabe send hbe
+        addComment: (dishId, rating, author, comment) =>
+            dispatch({
+                // dispatch return korbe
+                type: "ADD_COMMENT",
+                payload: {
+                    dishId: dishId,
+                    author: author,
+                    rating: rating,
+                    comment: comment,
+                },
+            }),
+        //ekhane aro dispatch fn lekha jabe
+    };
+};
+
+
+
+
 class Menu extends Component {
     // class component e useState() use kora jayna
     state = {
@@ -66,6 +89,7 @@ class Menu extends Component {
                 <DishDetail
                     dish={this.state.selectedDish}
                     comments={comments}
+                    addComment={this.props.addComment}
                 />
             );
         }
@@ -89,4 +113,4 @@ class Menu extends Component {
     }
 }
 
-export default connect(mapStateToProps)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
