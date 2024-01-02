@@ -4,6 +4,29 @@ import React, { Component } from "react";
 import { Form, Button, Input } from "reactstrap";
 import { connect } from "react-redux";
 
+// dipatch r vinno vinno vabe lekha lagbena
+// all dispatch fn
+// protita property ek ek ta dispatch fn
+
+// mapDispatchToProps etake connect er moddhe likhte hbe export e
+const mapDispatchToProps = (dispatch) => {
+    return {
+        // addComment name e props hishabe send hbe
+        addComment: (dishId, rating, author, comment) =>
+            dispatch({
+                // dispatch return korbe
+                type: "ADD_COMMENT",
+                payload: {
+                    dishId: dishId,
+                    author: author,
+                    rating: rating,
+                    comment: comment,
+                },
+            }),
+        //ekhane aro dispatch fn lekha jabe
+    };
+};
+
 class CommentForm extends Component {
     constructor(props) {
         super(props);
@@ -20,23 +43,18 @@ class CommentForm extends Component {
 
     handleInputChange = (event) => {
         this.setState({
-            [event.target.name]: event.target.value
+            [event.target.name]: event.target.value,
         });
-    }
+    };
 
     handleSubmit = (event) => {
-
-        // dispatcher/action
-        // payload er vitore shob extra info send kora hy
-        this.props.dispatch({
-            type: 'ADD_COMMENT',
-            payload: {
-                dishId: this.props.dishId,
-                author: this.state.author,
-                rating: this.state.rating,
-                comment: this.state.comment
-            }
-        });
+        // addComment fn call kora holo
+        this.props.addComment(
+            this.props.dishId,
+            this.state.rating,
+            this.state.author,
+            this.state.comment
+        );
 
         //submit er por clear input boxes
         this.setState({
@@ -46,7 +64,7 @@ class CommentForm extends Component {
         });
 
         event.preventDefault();
-    }
+    };
 
     render() {
         return (
@@ -82,8 +100,7 @@ class CommentForm extends Component {
                         placeholder="Your Comment"
                         onChange={this.handleInputChange}
                         required
-                    >
-                    </Input>
+                    ></Input>
                     <br />
                     <Button type="submit">Submit Comment</Button>
                 </Form>
@@ -92,4 +109,8 @@ class CommentForm extends Component {
     }
 }
 
-export default connect()(CommentForm);
+// connect 2 ta param receive kore
+// 1st: mapStateToProps     // state k props e covert/map kora
+// 2nd : mapDispatchToProps // dispatch k props
+// 1ta param dle auto "mapStateToProps" call hbe, tai 1st ta null
+export default connect(null, mapDispatchToProps)(CommentForm);
