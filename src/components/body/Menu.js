@@ -4,7 +4,9 @@ import { Component } from "react";
 import DishDetail from "./DishDetail";
 import { CardColumns, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { connect } from "react-redux";
-import * as actionTypes from "../../redux/actionTypes";
+import { addComment } from "../../redux/actionCreators";
+
+
 
 // this fn receives the sate of reducer.js
 // NOTE: return hbe props hishebe, not state
@@ -17,28 +19,14 @@ const mapStateToProps = (state) => {
     };
 };
 
-
 // from CommentForm.js
 const mapDispatchToProps = (dispatch) => {
     return {
-        // addComment name e props hishabe send hbe
+        // ekhan theke actionCreators.js er addComment() call hbe
         addComment: (dishId, rating, author, comment) =>
-            dispatch({
-                // dispatch return korbe
-                type: actionTypes.ADD_COMMENT,
-                payload: {
-                    dishId: dishId,
-                    author: author,
-                    rating: rating,
-                    comment: comment,
-                },
-            }),
-        //ekhane aro dispatch fn lekha jabe
+            dispatch(addComment(dishId, rating, author, comment))
     };
 };
-
-
-
 
 class Menu extends Component {
     // class component e useState() use kora jayna
