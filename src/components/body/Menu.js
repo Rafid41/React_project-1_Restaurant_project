@@ -5,19 +5,16 @@ import DishDetail from "./DishDetail";
 import { CardColumns, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { connect } from "react-redux";
 
-
-
 // this fn receives the sate of reducer.js
 // NOTE: return hbe props hishebe, not state
 // "this.props.comments" evabe access korte hbe // age silo "this.state.comments"
 const mapStateToProps = (state) => {
-    console.log("mapStateToProps: ",state);
+    console.log("mapStateToProps: ", state);
     return {
         dishes: state.dishes,
-        comments: state.comments
-    }
-}
-
+        comments: state.comments,
+    };
+};
 
 class Menu extends Component {
     // class component e useState() use kora jayna
@@ -76,12 +73,10 @@ class Menu extends Component {
             <div className="container">
                 <div className="row">
                     <CardColumns>{menu}</CardColumns>
-                    <Modal
-                        isOpen={this.state.modalOpen}
-                        onClick={this.toggleModal}
-                    >
+                    <Modal isOpen={this.state.modalOpen}>
                         <ModalBody>{dishDetail}</ModalBody>
 
+                        {/* close button */}
                         <ModalFooter>
                             <button color="primary" onClick={this.toggleModal}>
                                 Close
