@@ -1,60 +1,32 @@
 // restaurant_project\src\components\body\Menu.js
 import MenuItem from "./MenuItem";
 import { Component } from "react";
-import DISHES from "../../data/dishes";
 import DishDetail from "./DishDetail";
-import COMMENTS from "../../data/comments";
 import { CardColumns, Modal, ModalBody, ModalFooter } from "reactstrap";
+import { connect } from "react-redux";
 
-// functional component
-// const Menu = () => {
-//     //useState hook: const [dishes, setDishes] = useState;
-//     const [dishes] = useState(DISHES); //from json file
 
-//     // [getter, setter] =  useState(), initial selected dish=null
-//     const [selectedDish, setSelectedDish] = useState(null);
 
-//     // set the value of selectedDish
-//     const onSelectDish = (dish) => {
-//         setSelectedDish(dish);
-//         // console.log(dish);
-//     };
+// this fn receives the sate of reducer.js
+// NOTE: return hbe props hishebe, not state
+// "this.props.comments" evabe access korte hbe // age silo "this.state.comments"
+const mapStateToProps = (state) => {
+    console.log("mapStateToProps: ",state);
+    return {
+        dishes: state.dishes,
+        comments: state.comments
+    }
+}
 
-//     // proti component k unique korte "key" define korte hy
-//     const menu = dishes.map((dish) => {
-//         return (
-//             <MenuItem dish={dish} onSelectDish={onSelectDish} key={dish.id} />
-//         );
-//     });
-
-//     // initially load hbena, kisu selected hole load hbe
-//     // null or value ase?
-//     const dishDetail = selectedDish ? <DishDetail dish={selectedDish} /> : null;
-
-//     return (
-//         <div className="container">
-//             <div className="row">
-//                 <div className="col-5">{menu}</div>
-//                 <div className="col-7">
-//                     {dishDetail}
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default Menu;
-
-//equivalent class component
 
 class Menu extends Component {
     // class component e useState() use kora jayna
     state = {
-        dishes: DISHES,
-        comments: COMMENTS,
+        // comments and dishes ekhn redux e
         selectedDish: null,
         modalOpen: false,
     };
+
     // class component e fn er age const lekha hoy na
     onSelectDish = (dish) => {
         //using setState
@@ -74,7 +46,7 @@ class Menu extends Component {
     render() {
         // modifying banner title in Navbar
         document.title = "Menu";
-        const menu = this.state.dishes.map((dish) => {
+        const menu = this.props.dishes.map((dish) => {
             return (
                 <MenuItem
                     dish={dish}
@@ -90,7 +62,7 @@ class Menu extends Component {
             //dishID ==> comments.js er  field
             //id ==> dishes.js er field
             //filter return an array
-            const comments = this.state.comments.filter((comment) => {
+            const comments = this.props.comments.filter((comment) => {
                 return comment.dishId === this.state.selectedDish.id;
             });
             dishDetail = (
@@ -122,4 +94,4 @@ class Menu extends Component {
     }
 }
 
-export default Menu;
+export default connect(mapStateToProps)(Menu);
