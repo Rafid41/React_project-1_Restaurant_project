@@ -2,6 +2,7 @@
 
 import React, { Component } from "react";
 import { Form, Button, Input } from "reactstrap";
+import { connect } from "react-redux";
 
 class CommentForm extends Component {
     constructor(props) {
@@ -20,11 +21,22 @@ class CommentForm extends Component {
     handleInputChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
-        })
+        });
     }
 
     handleSubmit = (event) => {
-        console.log(this.state);
+
+        // dispatcher/action
+        // payload er vitore shob extra info send kora hy
+        this.props.dispatch({
+            type: 'ADD_COMMENT',
+            payload: {
+                dishId: this.props.dishId,
+                author: this.state.author,
+                rating: this.state.rating,
+                comment: this.state.comment
+            }
+        });
 
         //submit er por clear input boxes
         this.setState({
@@ -80,4 +92,4 @@ class CommentForm extends Component {
     }
 }
 
-export default CommentForm;
+export default connect()(CommentForm);
