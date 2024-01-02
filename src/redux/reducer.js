@@ -3,24 +3,31 @@
 import DISHES from "../data/dishes";
 import COMMENTS from "../data/comments";
 import { combineReducers } from "redux";
+import * as actionTypes from "./actionTypes";
 
 // this reducer will only handle dishes
 const dishReducer = (dishState = DISHES, action) => {
-    return dishState;
+    switch (action.type) {
+        default:
+            return dishState;
+    }
 };
 
 // only comments
 const commentReducer = (commentState = COMMENTS, action) => {
-    // from CommentForm.js
-    if (action.type === "ADD_COMMENT") {
-        let comment = action.payload;
-        comment.id = commentState.length;
-        comment.date = new Date().toString();
+    // if else to switch case
+    switch (action.type) {
+        case actionTypes.ADD_COMMENT:
+            let comment = action.payload;
+            comment.id = commentState.length;
+            comment.date = new Date().toString();
 
-        //overwright previous state and return new
-        return commentState.concat(comment);
+            //overwright previous state and return new
+            return commentState.concat(comment);
+
+        default:
+            return commentState;
     }
-    return commentState;
 };
 
 // combine all reducers and handle the arguments of each reducer

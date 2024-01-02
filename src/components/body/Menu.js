@@ -4,6 +4,7 @@ import { Component } from "react";
 import DishDetail from "./DishDetail";
 import { CardColumns, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { connect } from "react-redux";
+import * as actionTypes from "../../redux/actionTypes";
 
 // this fn receives the sate of reducer.js
 // NOTE: return hbe props hishebe, not state
@@ -24,7 +25,7 @@ const mapDispatchToProps = (dispatch) => {
         addComment: (dishId, rating, author, comment) =>
             dispatch({
                 // dispatch return korbe
-                type: "ADD_COMMENT",
+                type: actionTypes.ADD_COMMENT,
                 payload: {
                     dishId: dishId,
                     author: author,
