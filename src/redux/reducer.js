@@ -2,33 +2,29 @@
 
 import DISHES from "../data/dishes";
 import COMMENTS from "../data/comments";
+import { combineReducers } from "redux";
 
-// main task: DISHES, COMMENTS k globally accessible kora
-const initialState = {
-    dishes: DISHES,
-    comments: COMMENTS,
-}
+// this reducer will only handle dishes
+const dishReducer = (dishState = DISHES, action) => {
+    return dishState;
+};
 
-export const Reducer = (state = initialState, action) => {
-
+// only comments
+const commentReducer = (commentState = COMMENTS, action) => {
     // from CommentForm.js
-    if (action.type === 'ADD_COMMENT') {
+    if (action.type === "ADD_COMMENT") {
         let comment = action.payload;
-
-        // restaurant_project\src\data\dishes.js er COMMENTS array er size
-        // index 0 diye suru, tai new entry er index/id hbe COMMENTS.length 
-        comment.id = state.comments.length;
-
-        // date == current date
+        comment.id = commentState.length;
         comment.date = new Date().toString();
-        // console.log(comment);
 
         //overwright previous state and return new
-        return {
-            ...state,
-            // restaurant_project\src\data\dishes.js er COMMENTS array er sathe new comment concat hbe
-            comments: state.comments.concat(comment)
-        }
+        return commentState.concat(comment);
     }
-    return state;
-}
+    return commentState;
+};
+
+// combine all reducers and handle the arguments of each reducer
+export const Reducer = combineReducers({
+    dishes: dishReducer,
+    comments: commentReducer,
+});
