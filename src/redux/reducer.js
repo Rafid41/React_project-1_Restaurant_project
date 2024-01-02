@@ -11,5 +11,11 @@ const initialState = {
 }
 
 export const Reducer = (state = initialState, action) => {
+    if (action.type === 'TEST') {
+        return{
+            ...state,
+            sample: action.str   // sample= action.str
+        }
+    }
     return state;
 }
