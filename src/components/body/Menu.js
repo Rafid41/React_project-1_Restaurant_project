@@ -12,7 +12,7 @@ import { addComment } from "../../redux/actionCreators";
 // NOTE: return hbe props hishebe, not state
 // "this.props.comments" evabe access korte hbe // age silo "this.state.comments"
 const mapStateToProps = (state) => {
-    console.log("mapStateToProps: ", state);
+    //console.log("mapStateToProps: ", state);
     return {
         dishes: state.dishes,
         comments: state.comments,
