@@ -2,6 +2,8 @@
 
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input, Col } from "reactstrap";
+import { LocalForm, Control, Errors } from "react-redux-form";
+// import { connect } from "react-redux";
 
 // Control Component
 // so state lagbe
@@ -58,7 +60,7 @@ class Contact extends Component {
                         <h3>Send us your Feedback</h3>
                     </div>
                     <div className="col-12 col-md-7">
-                        <Form onSubmit={this.handleSubmit}>
+                        <LocalForm onSubmit={this.handleSubmit}>
                             {/* <FormGroup row> er "row" prop bool value accept kore */}
                             {/* First Name */}
                             <FormGroup row>
@@ -69,12 +71,10 @@ class Contact extends Component {
                                 </Label>
 
                                 <Col md={10}>
-                                    <Input
-                                        type="text"
+                                    <Control.text
+                                        model=".firstname"
                                         name="firstname"
                                         placeholder="First Name"
-                                        value={this.state.firstname}
-                                        onChange={this.handleInputChange}
                                     />
                                 </Col>
                             </FormGroup>
@@ -86,12 +86,10 @@ class Contact extends Component {
                                 </Label>
 
                                 <Col md={10}>
-                                    <Input
-                                        type="text"
+                                    <Control.text
+                                        model=".lastname"
                                         name="lastname"
                                         placeholder="Last Name"
-                                        value={this.state.lastname}
-                                        onChange={this.handleInputChange}
                                     />
                                 </Col>
                             </FormGroup>
@@ -103,12 +101,11 @@ class Contact extends Component {
                                 </Label>
 
                                 <Col md={10}>
-                                    <Input
-                                        type="tel"
+                                    {/* type= “tel” hole <Control.text likhte hbe, onnovabe validate kora jabe */}
+                                    <Control.text
+                                        model=".telnum"
                                         name="telnum"
                                         placeholder="Tel. Number"
-                                        value={this.state.telnum}
-                                        onChange={this.handleInputChange}
                                     />
                                 </Col>
                             </FormGroup>
@@ -120,12 +117,10 @@ class Contact extends Component {
                                 </Label>
 
                                 <Col md={10}>
-                                    <Input
-                                        type="email"
+                                    <Control.text
+                                        model=".email"
                                         name="email"
                                         placeholder="Email"
-                                        value={this.state.email}
-                                        onChange={this.handleInputChange}
                                     />
                                 </Col>
                             </FormGroup>
@@ -135,13 +130,9 @@ class Contact extends Component {
                                 <Col md={{ size: 6, offset: 2 }}>
                                     <FormGroup check>
                                         <Label check>
-                                            <Input
-                                                type="checkbox"
+                                            <Control.checkbox
+                                                model=".agree"
                                                 name="agree"
-                                                checked={this.state.agree}
-                                                onChange={
-                                                    this.handleInputChange
-                                                }
                                             />
                                             <strong>May we contact you?</strong>
                                         </Label>
@@ -150,15 +141,13 @@ class Contact extends Component {
 
                                 {/* drop down menu */}
                                 <Col md={{ size: 3, offset: 1 }}>
-                                    <Input
-                                        type="select"
+                                    <Control.select
+                                        model=".contactType"
                                         name="contactType"
-                                        value={this.state.contactType}
-                                        onChange={this.handleInputChange}
                                     >
                                         <option>Tel.</option>
                                         <option>Email</option>
-                                    </Input>
+                                    </Control.select>
                                 </Col>
                             </FormGroup>
 
@@ -168,13 +157,11 @@ class Contact extends Component {
                                     Your Feedback
                                 </Label>
                                 <Col md={10}>
-                                    <Input
-                                        type="textarea"
+                                    <Control.textarea
+                                        model=".message"
                                         name="message"
-                                        value={this.state.message}
                                         rows="12"
-                                        onChange={this.handleInputChange}
-                                    ></Input>
+                                    />
                                 </Col>
                             </FormGroup>
 
@@ -186,7 +173,7 @@ class Contact extends Component {
                                     </Button>
                                 </Col>
                             </FormGroup>
-                        </Form>
+                        </LocalForm>
                     </div>
                 </div>
             </div>
