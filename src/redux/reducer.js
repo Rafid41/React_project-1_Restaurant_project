@@ -1,13 +1,27 @@
 //src\redux\reducer.js
-
-import DISHES from "../data/dishes";
 import COMMENTS from "../data/comments";
 import { combineReducers } from "redux";
 import * as actionTypes from "./actionTypes";
 
 // this reducer will only handle dishes
-const dishReducer = (dishState = DISHES, action) => {
+// dishState will accept objects
+const dishReducer = (dishState = { isLoading: false, dishes: [] }, action) => {
     switch (action.type) {
+
+        case actionTypes.DISHES_LOADING:
+            return {
+                ...dishState,
+                isLoading: true,
+                dishes: [],
+            };
+
+        case actionTypes.LOAD_DISHES:
+            return {
+                ...dishState,
+                isLoading: false, // dish load hle loading off
+                dishes: action.payload,
+            };
+
         default:
             return dishState;
     }
@@ -22,7 +36,7 @@ const commentReducer = (commentState = COMMENTS, action) => {
             comment.id = commentState.length;
             comment.date = new Date().toString();
 
-            //overwright previous state and return new
+            //overwrite previous state and return new
             return commentState.concat(comment);
 
         default:

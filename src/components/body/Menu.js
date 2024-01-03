@@ -4,9 +4,8 @@ import { Component } from "react";
 import DishDetail from "./DishDetail";
 import { CardColumns, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { connect } from "react-redux";
-import { addComment } from "../../redux/actionCreators";
-
-
+import { addComment, fetchDishes } from "../../redux/actionCreators";
+import LoadingScreen from "./LoadingScreen";
 
 // this fn receives the sate of reducer.js
 // NOTE: return hbe props hishebe, not state
@@ -24,7 +23,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         // ekhan theke actionCreators.js er addComment() call hbe
         addComment: (dishId, rating, author, comment) =>
-            dispatch(addComment(dishId, rating, author, comment))
+            dispatch(addComment(dishId, rating, author, comment)),
+
+        fetchDishes: () => dispatch(fetchDishes()), // fetchDishes() kon param xcpt krena, actionCreators.js
     };
 };
 
@@ -51,54 +52,68 @@ class Menu extends Component {
         });
     };
 
+    componentDidMount() {
+        this.props.fetchDishes();
+    }
+
     //class component e render call korte hbe
     render() {
         // modifying banner title in Navbar
         document.title = "Menu";
-        const menu = this.props.dishes.map((dish) => {
-            return (
-                <MenuItem
-                    dish={dish}
-                    onSelectDish={this.onSelectDish}
-                    key={dish.id}
-                />
-            );
-        });
 
-        let dishDetail = null;
-        if (this.state.selectedDish != null) {
-            //comment er dishId r dish er id same hole oi comment return korbe
-            //dishID ==> comments.js er  field
-            //id ==> dishes.js er field
-            //filter return an array
-            const comments = this.props.comments.filter((comment) => {
-                return comment.dishId === this.state.selectedDish.id;
+        // Menu loading screen
+        // from actionCreators.js
+        if (this.props.dishes.isLoading) {
+            return <LoadingScreen />;
+        } else {
+            const menu = this.props.dishes.dishes.map((dish) => {
+                return (
+                    <MenuItem
+                        dish={dish}
+                        onSelectDish={this.onSelectDish}
+                        key={dish.id}
+                    />
+                );
             });
-            dishDetail = (
-                <DishDetail
-                    dish={this.state.selectedDish}
-                    comments={comments}
-                    addComment={this.props.addComment}
-                />
+
+            let dishDetail = null;
+            if (this.state.selectedDish != null) {
+                //comment er dishId r dish er id same hole oi comment return korbe
+                //dishID ==> comments.js er  field
+                //id ==> dishes.js er field
+                //filter return an array
+                const comments = this.props.comments.filter((comment) => {
+                    return comment.dishId === this.state.selectedDish.id;
+                });
+                dishDetail = (
+                    <DishDetail
+                        dish={this.state.selectedDish}
+                        comments={comments}
+                        addComment={this.props.addComment}
+                    />
+                );
+            }
+            return (
+                <div className="container">
+                    <div className="row">
+                        <CardColumns>{menu}</CardColumns>
+                        <Modal isOpen={this.state.modalOpen}>
+                            <ModalBody>{dishDetail}</ModalBody>
+
+                            {/* close button */}
+                            <ModalFooter>
+                                <button
+                                    color="primary"
+                                    onClick={this.toggleModal}
+                                >
+                                    Close
+                                </button>
+                            </ModalFooter>
+                        </Modal>
+                    </div>
+                </div>
             );
         }
-        return (
-            <div className="container">
-                <div className="row">
-                    <CardColumns>{menu}</CardColumns>
-                    <Modal isOpen={this.state.modalOpen}>
-                        <ModalBody>{dishDetail}</ModalBody>
-
-                        {/* close button */}
-                        <ModalFooter>
-                            <button color="primary" onClick={this.toggleModal}>
-                                Close
-                            </button>
-                        </ModalFooter>
-                    </Modal>
-                </div>
-            </div>
-        );
     }
 }
 
