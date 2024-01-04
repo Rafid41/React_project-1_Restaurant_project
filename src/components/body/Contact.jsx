@@ -4,8 +4,19 @@ import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input, Col } from "reactstrap";
 import { LocalForm, Control, Errors } from "react-redux-form";
 
+//========= validators ===========//
+// validator pass na korle submit hbena
+//valid value
+const required = (val) => val && val.length;
 
+// check number or not, NaN == Not a Number
+const isNumber = (val) => !isNaN(Number(val));
 
+// check email field
+const validEmail = (val) =>
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
+
+// =================== class=====================//
 class Contact extends Component {
     // receive form field values
     handleSubmit = (values) => {
@@ -45,6 +56,23 @@ class Contact extends Component {
                                         placeholder="First Name"
                                         // bootrup design
                                         className="form-control"
+                                        // call validators, don't pass args
+                                        validators={{
+                                            required,
+                                        }}
+                                    />
+                                    {/* 
+                                        validator fail hole message dekhabe
+                                        validator er model name hbe j model er error catch kort chassi
+                                    */}
+                                    <Errors
+                                        className="text-danger"
+                                        model=".firstname"
+                                        show="touched"
+                                        // kon validator: fail hole ki msg
+                                        messages={{
+                                            required: "Required",
+                                        }}
                                     />
                                 </Col>
                             </FormGroup>
@@ -61,6 +89,18 @@ class Contact extends Component {
                                         name="lastname"
                                         placeholder="Last Name"
                                         className="form-control"
+                                        validators={{
+                                            required,
+                                        }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".lastname"
+                                        show="touched"
+                                        // kon validator: fail hole ki msg
+                                        messages={{
+                                            required: "Required",
+                                        }}
                                     />
                                 </Col>
                             </FormGroup>
@@ -78,6 +118,20 @@ class Contact extends Component {
                                         name="telnum"
                                         placeholder="Tel. Number"
                                         className="form-control"
+                                        validators={{
+                                            required,
+                                            isNumber,
+                                        }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".telnum"
+                                        show="touched"
+                                        // kon validator: fail hole ki msg
+                                        messages={{
+                                            required: "Required, ",
+                                            isNumber: "Invalid Number!",
+                                        }}
                                     />
                                 </Col>
                             </FormGroup>
@@ -94,6 +148,20 @@ class Contact extends Component {
                                         name="email"
                                         placeholder="Email"
                                         className="form-control"
+                                        validators={{
+                                            required,
+                                            validEmail,
+                                        }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".email"
+                                        show="touched"
+                                        // kon validator: fail hole ki msg
+                                        messages={{
+                                            required: "Required, ",
+                                            validEmail: "Invalid Email!",
+                                        }}
                                     />
                                 </Col>
                             </FormGroup>
@@ -138,6 +206,18 @@ class Contact extends Component {
                                         name="message"
                                         rows="12"
                                         className="form-control"
+                                        validators={{
+                                            required,
+                                        }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".message"
+                                        show="touched"
+                                        // kon validator: fail hole ki msg
+                                        messages={{
+                                            required: "Required, ",
+                                        }}
                                     />
                                 </Col>
                             </FormGroup>
