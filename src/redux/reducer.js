@@ -2,12 +2,13 @@
 import COMMENTS from "../data/comments";
 import { combineReducers } from "redux";
 import * as actionTypes from "./actionTypes";
+import { InitialContactForm } from "./forms";
+import { createForms } from "react-redux-form";
 
 // this reducer will only handle dishes
 // dishState will accept objects
 const dishReducer = (dishState = { isLoading: false, dishes: [] }, action) => {
     switch (action.type) {
-
         case actionTypes.DISHES_LOADING:
             return {
                 ...dishState,
@@ -48,4 +49,11 @@ const commentReducer = (commentState = COMMENTS, action) => {
 export const Reducer = combineReducers({
     dishes: dishReducer,
     comments: commentReducer,
+
+    // object k form e convert kre
+    ...createForms({
+        // forms.js e multiple fn thakle ", diye pore likhe dlei hbe"
+        // redux store e save hbe eta
+        feedback: InitialContactForm,
+    }),
 });

@@ -1,8 +1,20 @@
 //restaurant_project\src\components\body\Contact.jsx
 
 import React, { Component } from "react";
-import { Button, Form, FormGroup, Label, Input, Col } from "reactstrap";
-import { LocalForm, Control, Errors } from "react-redux-form";
+import { Button, FormGroup, Label, Col } from "reactstrap";
+import { Form, Control, Errors, actions } from "react-redux-form";
+import { connect } from "react-redux";
+
+//=========== connect with redux =================//
+const mapDispatchToProps = (dispatch) => {
+    return {
+        // form submit er por reset kore value fix kore dbe
+        resetFeedbackForm: () => {
+            // "feedback" holo reducer.js er form pass er keyword
+            dispatch(actions.reset("feedback"));
+        },
+    };
+};
 
 //========= validators ===========//
 // validator pass na korle submit hbena
@@ -21,6 +33,8 @@ class Contact extends Component {
     // receive form field values
     handleSubmit = (values) => {
         console.log(values);
+        // reset form
+        this.props.resetFeedbackForm();
     };
 
     render() {
@@ -36,12 +50,15 @@ class Contact extends Component {
                         <h3>Send us your Feedback</h3>
                     </div>
                     <div className="col-12 col-md-7">
-                        {/* <LocalForm e shob field er value receive kore <LocalForm> tag er vitor */}
-                        <LocalForm
+                        {/* 
+                            # redux theke form import hole <LocalForm> use na kore <Form> use korte hbe
+                            # "feedback" holo reducer.js er form pass er keyword
+                            # 'feedback' diye form er sathe store connect
+                        */}
+                        <Form
+                            model="feedback"
                             onSubmit={(values) => this.handleSubmit(values)}
                         >
-                            {/* <FormGroup row> er "row" prop bool value accept kore */}
-                            {/* First Name */}
                             <FormGroup row>
                                 {/* md==medium */}
 
@@ -230,7 +247,7 @@ class Contact extends Component {
                                     </Button>
                                 </Col>
                             </FormGroup>
-                        </LocalForm>
+                        </Form>
                     </div>
                 </div>
             </div>
@@ -238,4 +255,4 @@ class Contact extends Component {
     }
 }
 
-export default Contact;
+export default connect(null, mapDispatchToProps)(Contact);
