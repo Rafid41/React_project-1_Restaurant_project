@@ -3,48 +3,13 @@
 import React, { Component } from "react";
 import { Button, Form, FormGroup, Label, Input, Col } from "reactstrap";
 import { LocalForm, Control, Errors } from "react-redux-form";
-// import { connect } from "react-redux";
 
-// Control Component
-// so state lagbe
+
 
 class Contact extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            firstname: "",
-            lastname: "",
-            telnum: "",
-            email: "",
-            agree: false,
-            contactType: "Tel.",
-            message: "",
-        };
-
-        // bind handleInputChange
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleInputChange = (event) => {
-        // checkbox kina check, chkbox true/false hy
-        const value =
-            event.target.type === "checkbox"
-                ? event.target.checked
-                : event.target.value;
-
-        //field_name
-        const name = event.target.name;
-
-        // setState
-        this.setState({
-            [name]: value,
-        });
-    };
-
-    handleSubmit = (event) => {
-        console.log(this.state);
-        event.preventDefault();
+    // receive form field values
+    handleSubmit = (values) => {
+        console.log(values);
     };
 
     render() {
@@ -60,7 +25,10 @@ class Contact extends Component {
                         <h3>Send us your Feedback</h3>
                     </div>
                     <div className="col-12 col-md-7">
-                        <LocalForm onSubmit={this.handleSubmit}>
+                        {/* <LocalForm e shob field er value receive kore <LocalForm> tag er vitor */}
+                        <LocalForm
+                            onSubmit={(values) => this.handleSubmit(values)}
+                        >
                             {/* <FormGroup row> er "row" prop bool value accept kore */}
                             {/* First Name */}
                             <FormGroup row>
@@ -75,6 +43,8 @@ class Contact extends Component {
                                         model=".firstname"
                                         name="firstname"
                                         placeholder="First Name"
+                                        // bootrup design
+                                        className="form-control"
                                     />
                                 </Col>
                             </FormGroup>
@@ -90,6 +60,7 @@ class Contact extends Component {
                                         model=".lastname"
                                         name="lastname"
                                         placeholder="Last Name"
+                                        className="form-control"
                                     />
                                 </Col>
                             </FormGroup>
@@ -106,6 +77,7 @@ class Contact extends Component {
                                         model=".telnum"
                                         name="telnum"
                                         placeholder="Tel. Number"
+                                        className="form-control"
                                     />
                                 </Col>
                             </FormGroup>
@@ -121,6 +93,7 @@ class Contact extends Component {
                                         model=".email"
                                         name="email"
                                         placeholder="Email"
+                                        className="form-control"
                                     />
                                 </Col>
                             </FormGroup>
@@ -133,6 +106,8 @@ class Contact extends Component {
                                             <Control.checkbox
                                                 model=".agree"
                                                 name="agree"
+                                                // bootstrap class for checkbox
+                                                className="form-check-input"
                                             />
                                             <strong>May we contact you?</strong>
                                         </Label>
@@ -144,6 +119,7 @@ class Contact extends Component {
                                     <Control.select
                                         model=".contactType"
                                         name="contactType"
+                                        className="form-control"
                                     >
                                         <option>Tel.</option>
                                         <option>Email</option>
@@ -161,6 +137,7 @@ class Contact extends Component {
                                         model=".message"
                                         name="message"
                                         rows="12"
+                                        className="form-control"
                                     />
                                 </Col>
                             </FormGroup>
