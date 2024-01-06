@@ -1,6 +1,8 @@
 // src\redux\actionCreators.js
 import * as actionTypes from "./actionTypes";
-import DISHES from "../data/dishes";
+//import DISHES from "../data/dishes";
+import axios from "axios";
+import { baseURL } from "./baseURL";
 
 export const addComment = (dishId, rating, author, comment) => {
     return {
@@ -36,9 +38,10 @@ export const fetchDishes = () => {
         // eta call hole 1st fn er payload e pass hbe
         dispatch(dishesLoading());
 
-        // late call loadDishes 2000 ms
-        setTimeout(() => {
-            dispatch(loadDishes(DISHES)); // spinner show korbe
-        }, 2000);
+        // axios automatically asynchronous way te kaj kore
+        axios
+            .get(baseURL + "dishes")
+            .then((response) => response.data)
+            .then((dishes) => dispatch(loadDishes(dishes)));
     };
 };

@@ -1,6 +1,7 @@
 //restaurant_project\src\components\body\MenuItem.js
 
 import { Card, CardImg, CardImgOverlay, CardTitle } from "reactstrap";
+import { baseURL } from "../../redux/baseURL";
 
 //  props diye default vabe individual menu rcv korse(props from Menu.js), omport kora lagenay, same like related_name in django
 // props.dist == {dish} //object de-structure
@@ -15,7 +16,7 @@ const MenuItem = ({ dish, onSelectDish }) => {
             >
                 <CardImg
                     alt={dish.name}
-                    src={dish.image}
+                    src={baseURL + dish.image}
                     style={{
                         height: 270,
                         opacity: 0.5,
@@ -38,5 +39,32 @@ const MenuItem = ({ dish, onSelectDish }) => {
         </div>
     );
 };
+
+// const MenuItem = (props) => {
+//     return (
+//         <div>
+//             <Card style={{ padding: "10px" }}>
+//                 <CardImg
+//                     width="100%"
+//                     alt={baseURL + props.dish.name}
+//                     src={baseURL + props.dish.image}
+//                     style={{
+//                         height: 270,
+//                         opacity: "0.5",
+//                     }}
+//                 />
+//                 <CardImgOverlay>
+//                     <CardTitle
+//                         tag="h5"
+//                         style={{ cursor: "pointer" }}
+//                         onClick={props.onSelectDish}
+//                     >
+//                         {props.dish.name}
+//                     </CardTitle>
+//                 </CardImgOverlay>
+//             </Card>
+//         </div>
+//     );
+// };
 
 export default MenuItem;
