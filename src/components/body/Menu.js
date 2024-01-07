@@ -4,7 +4,11 @@ import { Component } from "react";
 import DishDetail from "./DishDetail";
 import { CardColumns, Modal, ModalBody, ModalFooter } from "reactstrap";
 import { connect } from "react-redux";
-import { addComment, fetchDishes, fetchComments } from "../../redux/actionCreators";
+import {
+    addComment,
+    fetchDishes,
+    fetchComments,
+} from "../../redux/actionCreators";
 import LoadingScreen from "./LoadingScreen";
 
 // this fn receives the sate of reducer.js
@@ -27,7 +31,7 @@ const mapDispatchToProps = (dispatch) => {
 
         fetchDishes: () => dispatch(fetchDishes()), // fetchDishes() kon param xcpt krena, actionCreators.js
 
-        fetchComments: () => dispatch(fetchComments())
+        fetchComments: () => dispatch(fetchComments()),
     };
 };
 
@@ -85,9 +89,11 @@ class Menu extends Component {
                 //dishID ==> comments.js er  field
                 //id ==> dishes.js er field
                 //filter return an array
-                const comments = this.props.comments.comments.filter((comment) => {
-                    return comment.dishId === this.state.selectedDish.id;
-                });
+                const comments = this.props.comments.comments.filter(
+                    (comment) => {
+                        return comment.dishId === this.state.selectedDish.id;
+                    }
+                );
                 dishDetail = (
                     <DishDetail
                         dish={this.state.selectedDish}

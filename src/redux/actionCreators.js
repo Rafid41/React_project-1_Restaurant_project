@@ -1,21 +1,31 @@
 // src\redux\actionCreators.js
 import * as actionTypes from "./actionTypes";
-//import DISHES from "../data/dishes";
 import axios from "axios";
 import { baseURL } from "./baseURL";
 
-export const addComment = (dishId, rating, author, comment) => {
-    return {
-        // dispatch return korbe
-        type: actionTypes.ADD_COMMENT,
-        payload: {
-            dishId: dishId,
-            author: author,
-            rating: rating,
-            comment: comment,
-        },
+// send comment to server
+export const addComment = (dishId, rating, author, comment) => (dispatch) => {
+    const newComment = {
+        dishId: dishId,
+        author: author,
+        rating: rating,
+        comment: comment,
     };
+    newComment.date = new Date().toISOString();
+
+    // call axios post
+    // 'comment' name er object er under e add korbe
+    axios
+        .post(baseURL + "comments", newComment)
+        .then((response) => response.data)
+        .then((comment) => dispatch(commentConcat(comment))); //update redux store
 };
+
+// ager comment er sathe new gulo concat korbe
+export const commentConcat = (comment) => ({
+    type: actionTypes.ADD_COMMENT,
+    payload: comment,
+});
 
 export const commentLoading = () => ({
     type: actionTypes.COMMENTS_LOADING,
