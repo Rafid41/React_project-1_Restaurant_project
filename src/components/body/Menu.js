@@ -2,7 +2,7 @@
 import MenuItem from "./MenuItem";
 import { Component } from "react";
 import DishDetail from "./DishDetail";
-import { CardColumns, Modal, ModalBody, ModalFooter } from "reactstrap";
+import { CardColumns, Modal, ModalBody, ModalFooter, Alert } from "reactstrap";
 import { connect } from "react-redux";
 import {
     addComment,
@@ -10,6 +10,10 @@ import {
     fetchComments,
 } from "../../redux/actionCreators";
 import LoadingScreen from "./LoadingScreen";
+
+
+
+
 
 // this fn receives the sate of reducer.js
 // NOTE: return hbe props hishebe, not state
@@ -72,7 +76,11 @@ class Menu extends Component {
         // from actionCreators.js
         if (this.props.dishes.isLoading) {
             return <LoadingScreen />;
-        } else {
+        }
+        else if (this.props.dishes.errMess != null) {
+            return <Alert color="danger">{this.props.dishes.errMess}</Alert>;
+        }
+        else {
             const menu = this.props.dishes.dishes.map((dish) => {
                 return (
                     <MenuItem

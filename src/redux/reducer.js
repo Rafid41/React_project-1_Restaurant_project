@@ -6,12 +6,17 @@ import { createForms } from "react-redux-form";
 
 // this reducer will only handle dishes
 // dishState will accept objects
-const dishReducer = (dishState = { isLoading: false, dishes: [] }, action) => {
+// rcv dispatch from actionCreators.js
+const dishReducer = (
+    dishState = { isLoading: false, dishes: [], errMess: null },
+    action
+) => {
     switch (action.type) {
         case actionTypes.DISHES_LOADING:
             return {
                 ...dishState,
                 isLoading: true,
+                errMess: null,
                 dishes: [],
             };
 
@@ -19,7 +24,16 @@ const dishReducer = (dishState = { isLoading: false, dishes: [] }, action) => {
             return {
                 ...dishState,
                 isLoading: false, // dish load hle loading off
-                dishes: action.payload,
+                errMess: null,
+                dishes: action.payload
+            };
+
+        case actionTypes.DISHES_FAILED:
+            return {
+                ...dishState,
+                isLoading: false,
+                errMess: action.payload,
+                dishes: []
             };
 
         default:
@@ -50,10 +64,9 @@ const commentReducer = (
         case actionTypes.ADD_COMMENT:
             let comment = action.payload;
 
-            
             return {
                 ...commentState,
-                comments: commentState.comments.concat(comment)
+                comments: commentState.comments.concat(comment),
             };
 
         default:

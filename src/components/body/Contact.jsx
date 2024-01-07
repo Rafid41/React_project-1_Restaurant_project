@@ -61,7 +61,20 @@ class Contact extends Component {
                         });
                     }, 3000);
                 }
+            }) // error catching
+            .catch((error) => {
+                this.setState({
+                    alertShow: true,
+                    alertText: error.message,
+                    alertType: "danger",
+                });
+                setTimeout(() => {
+                    this.setState({
+                        alertShow: false,
+                    });
+                }, 3000);
             });
+
         this.props.resetFeedbackForm();
     };
 

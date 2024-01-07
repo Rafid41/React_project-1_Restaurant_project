@@ -60,6 +60,12 @@ export const dishesLoading = () => ({
     type: actionTypes.DISHES_LOADING,
 });
 
+// ERROR
+export const dishesFailed = (errMess) => ({
+    type: actionTypes.DISHES_FAILED,
+    payload: errMess,
+});
+
 //(dispatch) parameter niye arekta fn return korbe
 // ekhane uporer 2ta fn k dispatch kora hbe
 // redux thunk er maddhome ek dispatch fn er vitor arek dispatch fn call kora jay
@@ -70,9 +76,11 @@ export const fetchDishes = () => {
         dispatch(dishesLoading());
 
         // axios automatically asynchronous way te kaj kore
+        // jodi failed hoy submit e , taile catch fn and dispatch(dishesFailed)
         axios
             .get(baseURL + "dishes")
             .then((response) => response.data)
-            .then((dishes) => dispatch(loadDishes(dishes)));
+            .then((dishes) => dispatch(loadDishes(dishes)))
+            .catch((error) => dispatch(dishesFailed(error.message)));
     };
 };
