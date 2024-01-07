@@ -19,7 +19,10 @@ const DishDetail = (props) => {
                     <CardText>{props.dish.description}</CardText>
                     <CardText>Price: {props.dish.price}/-</CardText>
                     <hr />
-                    <LoadComments comments={props.comments}></LoadComments>
+                    <LoadComments
+                        comments={props.comments}
+                        commentIsLoading={props.commentIsLoading}
+                    ></LoadComments>
                     <hr />
                     {/* addComment Menu.js er property, okhan theke ei props send kora hoise */}
                     <CommentForm

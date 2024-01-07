@@ -17,6 +17,27 @@ export const addComment = (dishId, rating, author, comment) => {
     };
 };
 
+export const commentLoading = () => ({
+    type: actionTypes.COMMENTS_LOADING,
+});
+
+// server theke j comment  ashbe se rcv korbe &
+// payload hisebe comment pass korbe jate reducer store e comment set hye jay
+export const loadComments = (comments) => ({
+    type: actionTypes.LOAD_COMMENTS,
+    payload: comments,
+});
+
+// dispatch korbe commentLoading and loadComments k
+export const fetchComments = () => (dispatch) => {
+    dispatch(commentLoading());
+
+    axios
+        .get(baseURL + "comments")
+        .then((response) => response.data)
+        .then((comments) => dispatch(loadComments(comments)));
+};
+
 export const loadDishes = (dishes) => {
     return {
         type: actionTypes.LOAD_DISHES,
