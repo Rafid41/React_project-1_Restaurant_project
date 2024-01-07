@@ -4,6 +4,9 @@ import React, { Component } from "react";
 import { Button, FormGroup, Label, Col } from "reactstrap";
 import { Form, Control, Errors, actions } from "react-redux-form";
 import { connect } from "react-redux";
+import axios from "axios";
+import { baseURL } from "../../redux/baseURL";
+import { Alert } from "reactstrap";
 
 //=========== connect with redux =================//
 const mapDispatchToProps = (dispatch) => {
@@ -30,10 +33,35 @@ const validEmail = (val) =>
 
 // =================== class=====================//
 class Contact extends Component {
+    state = {
+        alertShow: false,
+        alertText: null,
+        alertType: null,
+    };
+
     // receive form field values
     handleSubmit = (values) => {
-        console.log(values);
-        // reset form
+        // post frrdback data to server
+        axios
+            .post(baseURL + "feedback", values)
+            .then((response) => response.status)
+            .then((status) => {
+                if (status === 201) {
+                    //201 means new created
+                    this.setState({
+                        alertShow: true,
+                        alertText: "Submitted Successfully",
+                        alertType: "success", //bootstrap color er className er moto
+                    });
+
+                    // messagebox timelimit
+                    setTimeout(() => {
+                        this.setState({
+                            alertShow: false,
+                        });
+                    }, 3000);
+                }
+            });
         this.props.resetFeedbackForm();
     };
 
@@ -46,6 +74,14 @@ class Contact extends Component {
                     className="row row-content"
                     style={{ paddingLeft: "20px", textAlign: "left" }}
                 >
+                    {/* isOpen ==false hole alret dekhabena */}
+                    <Alert
+                        isOpen={this.state.alertShow}
+                        color={this.state.alertType}
+                    >
+                        {this.state.alertText}
+                    </Alert>
+
                     <div className="col-12">
                         <h3>Send us your Feedback</h3>
                     </div>
