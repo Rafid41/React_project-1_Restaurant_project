@@ -8,10 +8,13 @@ import { baseURL } from "../../redux/baseURL";
 const MenuItem = ({ dish, onSelectDish }) => {
     return (
         // from reactstrap website, code copy paste, card->image-overlay card
-        <div>
+        <div style={{
+            display:"flex",
+            justifyContent: "center"
+        }}>
             <Card
                 inverse
-                style={{ padding: 10, margin: 10, cursor: "pointer" }}
+                style={{ padding: 10, margin: 10, cursor: "pointer", width: "50%"}}
                 onClick={() => onSelectDish(dish)}
             >
                 <CardImg

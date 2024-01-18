@@ -121,7 +121,7 @@ class Menu extends Component {
                             {/* close button */}
                             <ModalFooter>
                                 <button
-                                    color="primary"
+                                    className="btn btn-primary"
                                     onClick={this.toggleModal}
                                 >
                                     Close
